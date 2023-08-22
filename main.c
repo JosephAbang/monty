@@ -23,7 +23,7 @@ int main(int argc, char **argv)
                 printf("Error: Can't open file <%s>\n", argv[1]);
                 exit(EXIT_FAILURE);
         }
-        while ((nread = getline(&buf, &buf_size, stream)) != -1)
+        while ((nread = fgets(&buf, &buf_size, stream)) != -1)
         {
                 line_num++;
                 token = strtok(buf, " \t\n");
