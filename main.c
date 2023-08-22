@@ -7,9 +7,7 @@ int main(int argc, char **argv)
 {
         FILE *stream;
         unsigned int line_num = 0;
-        char *buf = NULL, *token;
-        size_t buf_size = 0;
-        ssize_t nread;
+        char buf[256], *token;
         void (*f)(stack_t **stack, unsigned int line_number);
 
         if (argc != 2)
@@ -23,7 +21,7 @@ int main(int argc, char **argv)
                 printf("Error: Can't open file <%s>\n", argv[1]);
                 exit(EXIT_FAILURE);
         }
-        while ((nread = fgets(&buf, &buf_size, stream)) != -1)
+        while (fgets(buf, sizeof(buf), stream) != NULL)
         {
                 line_num++;
                 token = strtok(buf, " \t\n");
@@ -32,10 +30,8 @@ int main(int argc, char **argv)
                 else
                 {
                         printf("L<%d>: unknown instruction <%s>\n", line_num, token);
-			 free(buf);
                         exit(EXIT_FAILURE);
                 }
-                free(buf);
         }
         return (0);
 }                                                                           
