@@ -1,5 +1,5 @@
 #include "monty.h"
-
+#include <stdio.h>
 void cmd_push( __attribute__((unused)) stack_t **stack,  __attribute__((unused)) unsigned int line_number)
 {
 	printf("Hey, I am push");
