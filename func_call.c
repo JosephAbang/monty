@@ -6,7 +6,7 @@
  * Return: ponter to a function
  */
 
-void (*function_call(char *cmd))
+void (*function_call(char *cmd))(stack_t **stack, unsigned int line_number)
 {
 	instruction_t cmd_arr[] =
 	{
