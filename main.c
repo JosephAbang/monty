@@ -40,11 +40,10 @@ int main(int argc, char **argv)
 		{
 			token = strtok(NULL, " \t");
 		}
-		if ((f = function_call(token[0])) != NULL)
-			f(__attribute__((unused)) stack,  __attribute__((unused)) line_num);
+		if ((f = function_call(token[0])) != NULL)		f(__attribute__((unused)) stack,  __attribute__((unused)) line_num);
 		else
 		{
-			printf("L<%d>: unknown instruction <%s>\n", line_num, token[0]);
+			printf("L<%ld>: unknown instruction <%d>\n", line_num, token[0]);
 			free(buf);
 			free(buf_copy);
 			exit(EXIT_FAILURE);
