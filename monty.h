@@ -8,9 +8,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
-
 extern int push_data;
-
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -50,6 +48,5 @@ void cmd_pop(stack_t **stack, unsigned int line_number);
 void cmd_swap(stack_t **stack, unsigned int line_number);
 void cmd_add(stack_t **stack, unsigned int line_number);
 void cmd_nop(stack_t **stack, unsigned int line_number);
-
 
 #endif /* _MONTY_H_ */
