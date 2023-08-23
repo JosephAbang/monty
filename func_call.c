@@ -23,7 +23,7 @@ void (*function_call(char *cmd))(stack_t **stack, unsigned int line_number)
 
 	while (cmd_arr[idx].opcode)
 	{
-		if (cmd_arr[idx].opcode == cmd && *(cmd + 1) == '\0')
+		if (strcmp(cmd_arr[idx].opcode,cmd) == 0)
 		{
 			return (cmd_arr[idx].f);
 		}

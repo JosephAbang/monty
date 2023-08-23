@@ -1,12 +1,11 @@
 #include "monty.h"
-#include <stdio.h>
 
 void cmd_add( __attribute__((unused)) stack_t **stack, __attribute__((unused)) unsigned int line_number)
 {
-	printf("Hey, i am add");
+	printf("Hey, i am add\n");
 }
 
 void cmd_nop( __attribute__((unused)) stack_t **stack,  __attribute__((unused)) unsigned int line_number)
 {
-	        printf("Hey, i am nop");
+	        printf("Hey, i am nop\n");
 }

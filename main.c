@@ -3,12 +3,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int push_data;
+
 int main(int argc, char **argv)
 {
         FILE *stream;
         unsigned int line_num = 0;
         char buf[256], *token;
         void (*f)(stack_t **stack, unsigned int line_number);
+	
 
         if (argc != 2)
         {
@@ -26,7 +29,14 @@ int main(int argc, char **argv)
                 line_num++;
                 token = strtok(buf, " \t\n");
                 if ((f = function_call(token)) != NULL)
+		{
+			if (strcmp(token, "push") == 0)
+			{
+				token = strtok(NULL, " \t\n");
+				push_data = atoi(token);
+			}
                         f(NULL, line_num);
+		}
                 else
                 {
                         printf("L<%d>: unknown instruction <%s>\n", line_num, token);
