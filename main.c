@@ -10,8 +10,9 @@ int main(int argc, char **argv)
         FILE *stream;
         unsigned int line_num = 0;
         char buf[256], *token;
-	int len;
+	int len, is_int;
         void (*f)(stack_t **stack, unsigned int line_number);
+	size_t i;
 	
 
         if (argc != 2)
@@ -40,6 +41,25 @@ int main(int argc, char **argv)
 			if (strcmp(token, "push") == 0)
 			{
 				token = strtok(NULL, " \t\n");
+				if (token == NULL || strlen(token) == 0)
+				{
+					printf("L<%d>: usage: push integer\n", line_num);
+					exit(EXIT_FAILURE);
+				}
+				is_int = 1;
+				for (i = 0; i < strlen(token); i++)
+				{
+					if (!isdigit(token[i]))
+					{
+						is_int = 0;
+						break;
+					}
+				}
+				if (!is_int)
+				{
+					printf("L<%d>: usage: push integer\n", line_num);
+					exit(EXIT_FAILURE);
+				}
 				push_data = atoi(token);
 			}
                         f(NULL, line_num);

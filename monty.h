@@ -6,6 +6,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <stdio.h>
+#include <ctype.h>
 
 
 extern int push_data;
