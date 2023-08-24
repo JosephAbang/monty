@@ -86,7 +86,7 @@ void cmd_swap(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp;
 
-	if (*stack == NULL && (*stack)->next == NULL)
+	if (*stack == NULL || (*stack)->next == NULL)
 	{
 		printf("L<%d>: can't swap, stack too short\n", line_number);
 		free(stack);
