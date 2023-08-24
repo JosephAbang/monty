@@ -47,3 +47,24 @@ void cmd_sub(stack_t **stack, unsigned int line_number)
 		cmd_pop(stack, line_number);
 	}
 }
+
+void cmd_div(stack_t **stack, unsigned int line_number)
+{
+	stack_t *second_top;
+	stack_t *top;
+	int results;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L<%d>: can't sub, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		top = *stack;
+		second_top = top->next;
+		results = second_top->n / top->n;
+		second_top->n = results;
+		cmd_pop(stack, line_number);
+	}
+}
