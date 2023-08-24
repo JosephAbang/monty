@@ -88,5 +88,6 @@ int main(int argc, char **argv)
 		temp = next_temp;
 	}
 	free(stack);
+	fclose(stream);
         return (0);
 }                                                                  
