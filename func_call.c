@@ -17,6 +17,7 @@ void (*function_call(char *cmd))(stack_t **stack, unsigned int line_number)
 		{"swap", cmd_swap},
 		{"add", cmd_add},
 		{"nop", cmd_nop},
+		{"sub", cmd_sub},
 		{NULL, NULL}
 	};
 	int idx = 0;
