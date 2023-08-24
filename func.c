@@ -48,7 +48,6 @@ void cmd_pint(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL)
 	{
 		printf("L<%d>: can't pint, stack empty\n", line_number);
-		free(stack);
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -64,22 +63,19 @@ void cmd_pop(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL)
 	{
 		printf("L<%d>: can't pop an empty stack\n", line_number);
-		free(stack);
 		exit(EXIT_FAILURE);
 	}
-	else if ((*stack)->next == NULL)
+	temp = *stack;
+	if ((*stack)->next == NULL)
 	{
-		temp = *stack;
 		*stack = NULL;
-		free(temp);
 	}
 	else
 	{
-		temp = *stack;
-		temp->next->prev = NULL;
-		*stack = temp->next;
-		free(temp);
+		(*stack)->next->prev = NULL;
+		*stack = (*stack)->next;
 	}
+	free(temp);
 }
 
 void cmd_swap(stack_t **stack, unsigned int line_number)
@@ -89,7 +85,6 @@ void cmd_swap(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL || (*stack)->next == NULL)
 	{
 		printf("L<%d>: can't swap, stack too short\n", line_number);
-		free(stack);
 		exit(EXIT_FAILURE);
 	}
 	else
