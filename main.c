@@ -11,21 +11,20 @@ int main(int argc, char **argv)
         unsigned int line_num = 0;
         char buf[256], *token;
 	int len, is_int;
-	stack_t **stack, *temp;
+	stack_t **stack;
         void (*f)(stack_t **stack, unsigned int line_number);
 	size_t i;
-	stack_t *next_temp;
 	
 
         if (argc != 2)
         {
-                printf("USAGE: monty file\n");
+                fprintf(stderr, "USAGE: monty file\n");
                 exit(EXIT_FAILURE);
         }
         stream = fopen(argv[1], "r");
         if (stream == NULL)
         {
-                printf("Error: Can't open file <%s>\n", argv[1]);
+                fprintf(stderr, "Error: Can't open file <%s>\n", argv[1]);
                 exit(EXIT_FAILURE);
         }
 	
@@ -48,7 +47,9 @@ int main(int argc, char **argv)
 				token = strtok(NULL, " \t\n");
 				if (token == NULL || strlen(token) == 0)
 				{
-					printf("L<%d>: usage: push integer\n", line_num);
+					fprintf(stderr, "L<%d>: usage: push integer\n", line_num);
+					free_stack(stack);
+					fclose(stream);
 					exit(EXIT_FAILURE);
 				}
 				is_int = 1;
@@ -62,32 +63,46 @@ int main(int argc, char **argv)
 				}
 				if (!is_int)
 				{
-					printf("L<%d>: usage: push integer\n", line_num);
+					fprintf(stderr, "L<%d>: usage: push integer\n", line_num);
+					free_stack(stack);
+					fclose(stream);
 					exit(EXIT_FAILURE);
 				}
 				push_data = atoi(token);
 			}
 			if (stack == NULL)
 			{
-				printf("Error: malloc failed\n");
+				fprintf(stderr, "Error: malloc failed\n");
+				free_stack(stack);
+				fclose(stream);
 				exit(EXIT_FAILURE);
 			}
-                        f(stack, line_num);
+
+                        f(stack, line_num);	
 		}
                 else
                 {
-                        printf("L<%d>: unknown instruction <%s>\n", line_num, token);
-                        exit(EXIT_FAILURE);
+                        fprintf(stderr, "L<%d>: unknown instruction <%s>\n", line_num, token);
+		       	free_stack(stack);
+			fclose(stream);
+			exit(EXIT_FAILURE);
                 }
         }
-	temp = *stack;
-	while (temp)
-	{
-		next_temp = temp->next;
-		free(temp);
-		temp = next_temp;
-	}
-	free(stack);
+	free_stack(stack);
 	fclose(stream);
         return (0);
-}                                                                  
+}
+
+void free_stack(stack_t **stack)
+{
+	stack_t *temp, *next_temp;
+	temp = *stack;
+
+        while (temp)
+        {
+                next_temp = temp->next;
+                free(temp);
+                temp = next_temp;
+        }
+        free(stack);
+}

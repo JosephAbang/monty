@@ -7,8 +7,9 @@ void cmd_push(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 	
 	if (new_node == NULL)
 	{
-		printf("Error: malloc failed\n");
-		exit(EXIT_FAILURE);
+		fprintf(stderr, "Error: malloc failed\n");
+		free_stack(stack);
+                exit(EXIT_FAILURE);
 	}
 	if (*stack == NULL)
 	{
@@ -25,6 +26,7 @@ void cmd_push(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 		(*stack)->prev = new_node;
 		*stack = new_node;
 	}
+
 }
 
 void cmd_pall(stack_t **stack, __attribute__((unused)) unsigned int line_number)
@@ -41,14 +43,16 @@ void cmd_pall(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 		printf("%d\n", temp->n);
 		temp = temp->next;
 	}
+	
 }
 
 void cmd_pint(stack_t **stack, unsigned int line_number)
 {
 	if (*stack == NULL)
 	{
-		printf("L<%d>: can't pint, stack empty\n", line_number);
-		exit(EXIT_FAILURE);
+		fprintf(stderr, "L<%d>: can't pint, stack empty\n", line_number);
+		free_stack(stack);
+                exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -62,8 +66,9 @@ void cmd_pop(stack_t **stack, unsigned int line_number)
 
 	if (*stack == NULL)
 	{
-		printf("L<%d>: can't pop an empty stack\n", line_number);
-		exit(EXIT_FAILURE);
+		fprintf(stderr, "L<%d>: can't pop an empty stack\n", line_number);
+		free_stack(stack);
+                exit(EXIT_FAILURE);
 	}
 	temp = *stack;
 	if ((*stack)->next == NULL)
@@ -84,8 +89,9 @@ void cmd_swap(stack_t **stack, unsigned int line_number)
 
 	if (*stack == NULL || (*stack)->next == NULL)
 	{
-		printf("L<%d>: can't swap, stack too short\n", line_number);
-		exit(EXIT_FAILURE);
+		fprintf(stderr, "L<%d>: can't swap, stack too short\n", line_number);
+		free_stack(stack);
+                exit(EXIT_FAILURE);
 	}
 	else
 	{

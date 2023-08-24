@@ -50,8 +50,8 @@ void cmd_add(stack_t **stack, unsigned int line_number);
 void cmd_nop(stack_t **stack, unsigned int line_number);
 void cmd_sub(stack_t **stack, unsigned int line_number);
 void cmd_div(stack_t **stack, unsigned int line_number);
-void cmd_mul(stack_t **stack, unsigned int line_number);
+void  cmd_mul(stack_t **stack, unsigned int line_number);
 void cmd_mod(stack_t **stack, unsigned int line_numberr);
-
+void free_stack(stack_t **stack);
 
 #endif /* _MONTY_H_ */
