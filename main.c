@@ -14,6 +14,7 @@ int main(int argc, char **argv)
 	stack_t **stack, *temp;
         void (*f)(stack_t **stack, unsigned int line_number);
 	size_t i;
+	stack_t *next_temp;
 	
 
         if (argc != 2)
@@ -82,9 +83,9 @@ int main(int argc, char **argv)
 	temp = *stack;
 	while (temp)
 	{
-		temp = temp->next;
-		free(*stack);
-		*stack = temp;
+		next_temp = temp->next;
+		free(temp);
+		temp = next_temp;
 	}
 	free(stack);
         return (0);
