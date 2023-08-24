@@ -11,7 +11,7 @@ int main(int argc, char **argv)
         unsigned int line_num = 0;
         char buf[256], *token;
 	int len, is_int;
-	stack_t **stack = NULL; 
+	stack_t **stack, *temp;
         void (*f)(stack_t **stack, unsigned int line_number);
 	size_t i;
 	
@@ -27,6 +27,9 @@ int main(int argc, char **argv)
                 printf("Error: Can't open file <%s>\n", argv[1]);
                 exit(EXIT_FAILURE);
         }
+	
+	stack = malloc(sizeof(stack_t));
+	*stack = NULL;
         while (fgets(buf, sizeof(buf), stream) != NULL)
         {
                 line_num++;
@@ -63,6 +66,11 @@ int main(int argc, char **argv)
 				}
 				push_data = atoi(token);
 			}
+			if (stack == NULL)
+			{
+				printf("Error: malloc failed\n");
+				exit(EXIT_FAILURE);
+			}
                         f(stack, line_num);
 		}
                 else
@@ -71,6 +79,13 @@ int main(int argc, char **argv)
                         exit(EXIT_FAILURE);
                 }
         }
-	free(*stack);
+	temp = *stack;
+	while (temp)
+	{
+		temp = temp->next;
+		free(*stack);
+		*stack = temp;
+	}
+	free(stack);
         return (0);
-}                                                                           
+}                                                                  

@@ -25,25 +25,80 @@ void cmd_push(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 		(*stack)->prev = new_node;
 		*stack = new_node;
 	}
-	printf("New number added; %d\n", push_data);
 }
 
-void cmd_pall( __attribute__((unused)) stack_t **stack,  __attribute__((unused)) unsigned int line_number)
+void cmd_pall(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 {
-	printf("Hey, i am pall\n");
+	stack_t *temp;
+
+	if (*stack == NULL)
+	{
+		return;
+	}
+	temp = *stack;
+	while (temp)
+	{
+		printf("%d\n", temp->n);
+		temp = temp->next;
+	}
 }
 
-void cmd_pint( __attribute__((unused)) stack_t **stack,  __attribute__((unused)) unsigned int line_number)
+void cmd_pint(stack_t **stack, unsigned int line_number)
 {
-	printf("Hey, I am pint\n");
+	if (*stack == NULL)
+	{
+		printf("L<%d>: can't pint, stack empty\n", line_number);
+		free(stack);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		printf("%d\n", (*stack)->n);
+	}
 }
 
-void cmd_pop( __attribute__((unused)) stack_t **stack,  __attribute__((unused)) unsigned int line_number)
+void cmd_pop(stack_t **stack, unsigned int line_number)
 {
-	printf("Hey, I am pop\n");
+	stack_t *temp;
+
+	if (*stack == NULL)
+	{
+		printf("L<%d>: can't pop an empty stack\n", line_number);
+		free(stack);
+		exit(EXIT_FAILURE);
+	}
+	else if ((*stack)->next == NULL)
+	{
+		temp = *stack;
+		*stack = NULL;
+		free(temp);
+	}
+	else
+	{
+		temp = *stack;
+		temp->next->prev = NULL;
+		*stack = temp->next;
+		free(temp);
+	}
 }
 
-void cmd_swap( __attribute__((unused)) stack_t **stack,  __attribute__((unused)) unsigned int line_number)
+void cmd_swap(stack_t **stack, unsigned int line_number)
 {
-	printf("Hey, i am swap\n");
+	stack_t *temp;
+
+	if (*stack == NULL && (*stack)->next == NULL)
+	{
+		printf("L<%d>: can't swap, stack too short\n", line_number);
+		free(stack);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		temp = *stack;
+		*stack = temp->next;
+		(*stack)->prev = NULL;
+		temp->next = (*stack)->next;
+		(*stack)->next = temp;
+		temp->prev = *stack;
+	}
 }
