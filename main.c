@@ -11,6 +11,7 @@ int main(int argc, char **argv)
         unsigned int line_num = 0;
         char buf[256], *token;
 	int len, is_int;
+	stack_t **stack = NULL; 
         void (*f)(stack_t **stack, unsigned int line_number);
 	size_t i;
 	
@@ -62,7 +63,7 @@ int main(int argc, char **argv)
 				}
 				push_data = atoi(token);
 			}
-                        f(NULL, line_num);
+                        f(stack, line_num);
 		}
                 else
                 {
@@ -70,5 +71,6 @@ int main(int argc, char **argv)
                         exit(EXIT_FAILURE);
                 }
         }
+	free(*stack);
         return (0);
 }                                                                           
