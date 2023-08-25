@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 	stream = fopen(argv[1], "r");
 	if (stream == NULL)
 	{
-		fprintf(stderr, "Error: Can't open file <%s>\n", argv[1]);
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 				token = strtok(NULL, " \t\n");
 				if (token == NULL || strlen(token) == 0)
 				{
-					fprintf(stderr, "L<%d>: usage: push integer\n", line_num);
+					fprintf(stderr, "L%d: usage: push integer\n", line_num);
 					free_stack(stack);
 					fclose(stream);
 					exit(EXIT_FAILURE);
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 				}
 				if (!is_int)
 				{
-					fprintf(stderr, "L<%d>: usage: push integer\n", line_num);
+					fprintf(stderr, "L%d: usage: push integer\n", line_num);
 					free_stack(stack);
 					fclose(stream);
 					exit(EXIT_FAILURE);
@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			fprintf(stderr, "L<%d>: unknown instruction <%s>\n", line_num, token);
+			fprintf(stderr, "L%d: unknown instruction %s\n", line_num, token);
 			free_stack(stack);
 			fclose(stream);
 			exit(EXIT_FAILURE);
