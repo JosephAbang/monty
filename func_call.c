@@ -22,6 +22,7 @@ void (*function_call(char *cmd))(stack_t **stack, unsigned int line_number)
 		{"mul", cmd_mul},
 		{"mod", cmd_mod},
 		{"pchar", cmd_pchar},
+		{"pstr", cmd_pstr},
 		{NULL, NULL}
 	};
 	int idx = 0;
