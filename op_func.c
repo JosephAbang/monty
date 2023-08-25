@@ -69,7 +69,7 @@ void cmd_div(stack_t **stack, unsigned int line_number)
 	second_top = top->next;
 	if (top->n == 0)
 	{
-		fprintf(stderr, "L%d: division by zero", line_number);
+		fprintf(stderr, "L%d: division by zero\n", line_number);
 		free_stack(stack);
 		fclose(stream);
                 exit(EXIT_FAILURE);
