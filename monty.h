@@ -8,7 +8,8 @@
 #include <stdio.h>
 #include <ctype.h>
 
-extern int push_data;
+
+extern FILE *stream;
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)

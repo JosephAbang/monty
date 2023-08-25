@@ -1,14 +1,16 @@
 #include "monty.h"
 
 
-void cmd_push(stack_t **stack, __attribute__((unused)) unsigned int line_number)
+void cmd_push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *new_node = malloc(sizeof(stack_t));
+	int push_data = line_number;
 	
 	if (new_node == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		free_stack(stack);
+		fclose(stream);
                 exit(EXIT_FAILURE);
 	}
 	if (*stack == NULL)
@@ -52,6 +54,7 @@ void cmd_pint(stack_t **stack, unsigned int line_number)
 	{
 		fprintf(stderr, "L<%d>: can't pint, stack empty\n", line_number);
 		free_stack(stack);
+		fclose(stream);
                 exit(EXIT_FAILURE);
 	}
 	else
@@ -68,6 +71,7 @@ void cmd_pop(stack_t **stack, unsigned int line_number)
 	{
 		fprintf(stderr, "L<%d>: can't pop an empty stack\n", line_number);
 		free_stack(stack);
+		fclose(stream);
                 exit(EXIT_FAILURE);
 	}
 	temp = *stack;
@@ -91,6 +95,7 @@ void cmd_swap(stack_t **stack, unsigned int line_number)
 	{
 		fprintf(stderr, "L<%d>: can't swap, stack too short\n", line_number);
 		free_stack(stack);
+		fclose(stream);
                 exit(EXIT_FAILURE);
 	}
 	else

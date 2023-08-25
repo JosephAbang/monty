@@ -3,45 +3,50 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int push_data;
 
 int main(int argc, char **argv)
 {
-        FILE *stream;
-        unsigned int line_num = 0;
-        char buf[256], *token;
-	int len, is_int;
+	unsigned int line_num = 0;
+	char buf[256], *token;
+	int len, is_int, push_data;
 	stack_t **stack;
-        void (*f)(stack_t **stack, unsigned int line_number);
+	void (*f)(stack_t **stack, unsigned int line_number);
 	size_t i;
-	
 
-        if (argc != 2)
-        {
-                fprintf(stderr, "USAGE: monty file\n");
-                exit(EXIT_FAILURE);
-        }
-        stream = fopen(argv[1], "r");
-        if (stream == NULL)
-        {
-                fprintf(stderr, "Error: Can't open file <%s>\n", argv[1]);
-                exit(EXIT_FAILURE);
-        }
-	
+
+	if (argc != 2)
+	{
+		fprintf(stderr, "USAGE: monty file\n");
+		exit(EXIT_FAILURE);
+	}
+	stream = fopen(argv[1], "r");
+	if (stream == NULL)
+	{
+		fprintf(stderr, "Error: Can't open file <%s>\n", argv[1]);
+		exit(EXIT_FAILURE);
+	}
+
 	stack = malloc(sizeof(stack_t));
+	if (stack == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		free_stack(stack);
+		fclose(stream);
+		exit(EXIT_FAILURE);
+	}
 	*stack = NULL;
-        while (fgets(buf, sizeof(buf), stream) != NULL)
-        {
-                line_num++;
+	while (fgets(buf, sizeof(buf), stream) != NULL)
+	{
+		line_num++;
 		len = strlen(buf);
 		if (len > 0 && buf[len - 1] == '\n')
 			buf[len - 1] = '\0';
 		if (strlen(buf) == 0)
 			continue;
-                token = strtok(buf, " \t\n");
+		token = strtok(buf, " \t\n");
 		if (token[0] == '#')
 			continue;
-                if ((f = function_call(token)) != NULL)
+		if ((f = function_call(token)) != NULL)
 		{
 			if (strcmp(token, "push") == 0)
 			{
@@ -70,28 +75,21 @@ int main(int argc, char **argv)
 					exit(EXIT_FAILURE);
 				}
 				push_data = atoi(token);
+				line_num = push_data;
 			}
-			if (stack == NULL)
-			{
-				fprintf(stderr, "Error: malloc failed\n");
-				free_stack(stack);
-				fclose(stream);
-				exit(EXIT_FAILURE);
-			}
-
-                        f(stack, line_num);	
+			f(stack, line_num);	
 		}
-                else
-                {
-                        fprintf(stderr, "L<%d>: unknown instruction <%s>\n", line_num, token);
-		       	free_stack(stack);
+		else
+		{
+			fprintf(stderr, "L<%d>: unknown instruction <%s>\n", line_num, token);
+			free_stack(stack);
 			fclose(stream);
 			exit(EXIT_FAILURE);
-                }
-        }
+		}
+	}
 	free_stack(stack);
 	fclose(stream);
-        return (0);
+	return (0);
 }
 
 void free_stack(stack_t **stack)
@@ -99,11 +97,13 @@ void free_stack(stack_t **stack)
 	stack_t *temp, *next_temp;
 	temp = *stack;
 
-        while (temp)
-        {
-                next_temp = temp->next;
-                free(temp);
-                temp = next_temp;
-        }
-        free(stack);
+	while (temp)
+	{
+		next_temp = temp->next;
+		free(temp);
+		temp = next_temp;
+	}
+	free(stack);
 }
+
+FILE *stream;
