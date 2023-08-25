@@ -35,14 +35,14 @@ void cmd_pchar(stack_t **stack, unsigned int line_number)
 {
 	if (*stack == NULL)
 	{
-		printf("%d>: can't pchar, stack empty", line_number);
+		fprintf(stderr, "L<%d>: can't pchar, stack empty", line_number);
 		free_stack(stack);
 		fclose(stream);
 		exit(EXIT_FAILURE);
 	}
 	if ((*stack)->n < 0 || (*stack)->n > 127)
 	{
-		printf("L<%d>: can't pchar, value out of range", line_number);
+		fprintf(stderr, "L<%d>: can't pchar, value out of range", line_number);
 		free_stack(stack);
 		fclose(stream);
 		exit(EXIT_FAILURE);
