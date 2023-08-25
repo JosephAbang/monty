@@ -21,6 +21,7 @@ void (*function_call(char *cmd))(stack_t **stack, unsigned int line_number)
 		{"div", cmd_div},
 		{"mul", cmd_mul},
 		{"mod", cmd_mod},
+		{"pchar", cmd_pchar},
 		{NULL, NULL}
 	};
 	int idx = 0;

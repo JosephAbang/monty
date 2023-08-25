@@ -54,5 +54,6 @@ void cmd_div(stack_t **stack, unsigned int line_number);
 void  cmd_mul(stack_t **stack, unsigned int line_number);
 void cmd_mod(stack_t **stack, unsigned int line_numberr);
 void free_stack(stack_t **stack);
+void cmd_pchar(stack_t **stack, unsigned int line_number);
 
 #endif /* _MONTY_H_ */
