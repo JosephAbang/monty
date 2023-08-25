@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 		if (strlen(buf) == 0)
 			continue;
 		token = strtok(buf, " \t\n");
-		if (token[0] == '#')
+		if (token == NULL || token[0] == '#')
 			continue;
 		if ((f = function_call(token)) != NULL)
 		{
