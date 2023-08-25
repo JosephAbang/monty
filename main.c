@@ -30,7 +30,6 @@ int main(int argc, char **argv)
 	if (stack == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
-		free_stack(stack);
 		fclose(stream);
 		exit(EXIT_FAILURE);
 	}
@@ -61,6 +60,8 @@ int main(int argc, char **argv)
 				is_int = 1;
 				for (i = 0; i < strlen(token); i++)
 				{
+					if (token[i] == '-')
+						continue;
 					if (!isdigit(token[i]))
 					{
 						is_int = 0;
@@ -75,9 +76,10 @@ int main(int argc, char **argv)
 					exit(EXIT_FAILURE);
 				}
 				push_data = atoi(token);
-				line_num = push_data;
+				f(stack, push_data);
 			}
-			f(stack, line_num);	
+			else
+				f(stack, line_num);
 		}
 		else
 		{
